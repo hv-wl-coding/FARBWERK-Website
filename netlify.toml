@@ -1,0 +1,4 @@
+[build]
+  # Static HTML/CSS/JS site with no build step; publish the site folder as-is.
+  publish = "farbwerk-website"
+  command = ""
