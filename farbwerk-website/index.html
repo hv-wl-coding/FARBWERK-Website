@@ -309,10 +309,12 @@
     <!-- ======================================================================
          5. REFERENZEN / AUSGEWÄHLTE PROJEKTE (#referenzen)
          Inhalt: Drei beispielhafte Kundenprojekte aus Altbau, Gewerbe und
-                 Außenbereich mit Projektbeschreibung.
-         Besonderheiten: Visuelle Farbpaletten-Vorschau (`project-card__palette`)
-                         zeigt die eingesetzten Farbtöne ohne externe Bilddateien
-                         und ist per `aria-label` für Screenreader beschrieben.
+                 Außenbereich mit Farbpaletten-Vorschau und Detail-Trigger.
+         Besonderheiten & Funktion: Visuelle Farbpaletten-Vorschau
+                         (`.project-card__palette`) zeigt die Farbtöne ohne
+                         externe Bilddateien; jede Karte öffnet per Klick das
+                         gemeinsame `#service-modal` mit Beispielfoto,
+                         Highlights und Vorauswahl im Kontaktformular.
          ====================================================================== -->
     <section class="section section--box" id="referenzen" aria-labelledby="referenzen-heading">
       <div class="container">
@@ -329,13 +331,25 @@
               <span style="background-color: #f4f1ea;" title="Kreideweiß"></span>
               <span style="background-color: #1e2229;" title="Anthrazit"></span>
             </div>
-            <div class="project-card__body">
+            <button
+              type="button"
+              class="project-card__body project-card__trigger card--interactive"
+              data-service-value="innenraum"
+              data-tag="Wohnraum · Altbau"
+              data-title="Akzentwand &amp; Stuck-Restaurierung"
+              data-image="assets/images/referenz-altbau.jpg"
+              data-image-alt="Altbau-Wohnzimmer mit warmer Ocker-Akzentwand, Kreideweiß und restaurierten Zierleisten"
+              data-description="Kombination aus mattem Kreideweiß und einer warmen Ocker-Akzentwand im Wohnbereich inklusive Aufarbeitung historischer Zierleisten."
+              data-highlights="Harmonischer Kontrast aus Ocker &amp; Kreideweiß|Profilierte Zierleisten sauber aufgearbeitet|Staubarme Ausführung im bewohnten Altbau"
+              aria-label="Beispielfoto und Details zu Akzentwand und Stuck-Restaurierung öffnen"
+            >
               <span class="project-card__meta">Wohnraum &middot; Altbau</span>
               <h3>Akzentwand &amp; Stuck-Restaurierung</h3>
               <p>
                 Kombination aus mattem Kreideweiß und einer warmen Ocker-Akzentwand im Wohnbereich inklusive Aufarbeitung historischer Zierleisten.
               </p>
-            </div>
+              <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+            </button>
           </article>
 
           <article class="project-card">
@@ -344,13 +358,25 @@
               <span style="background-color: #e7dfd3;" title="Sandbeige"></span>
               <span style="background-color: #334155;" title="Schiefergrau"></span>
             </div>
-            <div class="project-card__body">
+            <button
+              type="button"
+              class="project-card__body project-card__trigger card--interactive"
+              data-service-value="innenraum"
+              data-tag="Gewerbe · Praxisräume"
+              data-title="Ruhiges Farbkonzept für Empfang &amp; Flur"
+              data-image="assets/images/referenz-praxis.jpg"
+              data-image-alt="Empfangs- und Flurbereich in Praxisräumen mit tiefgrünen Akzenten und ruhigen Wandflächen"
+              data-description="Strapazierfähige, abwaschbare Wandbeschichtung in harmonischen Natur- und Grüntönen für eine einladende Atmosphäre."
+              data-highlights="Scheuerbeständige Oberflächen für Publikumsverkehr|Ruhiges Farbkonzept für Empfang &amp; Wartezonen|Termingerechte Umsetzung außerhalb der Hauptzeiten"
+              aria-label="Beispielfoto und Details zu Ruhiges Farbkonzept für Empfang und Flur öffnen"
+            >
               <span class="project-card__meta">Gewerbe &middot; Praxisräume</span>
               <h3>Ruhiges Farbkonzept für Empfang &amp; Flur</h3>
               <p>
                 Strapazierfähige, abwaschbare Wandbeschichtung in harmonischen Natur- und Grüntönen für eine einladende Atmosphäre.
               </p>
-            </div>
+              <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+            </button>
           </article>
 
           <article class="project-card">
@@ -359,13 +385,25 @@
               <span style="background-color: #ffffff;" title="Reinweiß"></span>
               <span style="background-color: #c2410c;" title="Terrakotta"></span>
             </div>
-            <div class="project-card__body">
+            <button
+              type="button"
+              class="project-card__body project-card__trigger card--interactive"
+              data-service-value="fassade"
+              data-tag="Außenbereich · Einfamilienhaus"
+              data-title="Fassadenanstrich &amp; Holzfenster-Lackierung"
+              data-image="assets/images/referenz-fassade.jpg"
+              data-image-alt="Einfamilienhaus mit frisch gestrichener Fassade und sauber lackierten Holzfenstern"
+              data-description="Vollständige Reinigung, Grundierung und wetterbeständiger Silikonharz-Anstrich samt neu lackierten Holzrahmen."
+              data-highlights="Witterungsbeständiger Fassadenanstrich|Holzfenster fachgerecht vorbehandelt &amp; lackiert|Nachhaltiger Schutz gegen Feuchtigkeit &amp; Witterung"
+              aria-label="Beispielfoto und Details zu Fassadenanstrich und Holzfenster-Lackierung öffnen"
+            >
               <span class="project-card__meta">Außenbereich &middot; Einfamilienhaus</span>
               <h3>Fassadenanstrich &amp; Holzfenster-Lackierung</h3>
               <p>
                 Vollständige Reinigung, Grundierung und wetterbeständiger Silikonharz-Anstrich samt neu lackierten Holzrahmen.
               </p>
-            </div>
+              <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+            </button>
           </article>
         </div>
       </div>
