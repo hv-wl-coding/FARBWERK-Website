@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- ==========================================================================
+     DOKUMENTKOPF (<head>)
+     Inhalt: Zeichenkodierung, Viewport-Konfiguration, SEO-Beschreibung,
+             Seitentitel sowie Einbindung von Stylesheet, Google Fonts und JS.
+     Besonderheiten: `defer` lädt `main.js` erst nach vollständigem Parsen des
+                     DOMs; `preconnect` beschleunigt das Laden von Playfair Display.
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="FARBWERK – Maler- und Lackierermeisterbetrieb. Präzises Handwerk, moderne Farbkonzepte und saubere Raum- sowie Fassadengestaltung."
+  />
+  <title>FARBWERK | Maler- &amp; Lackierermeisterbetrieb</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/main.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700..900;1,700..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ========================================================================
+       BARRIEREFREIHEIT: SKIP-LINK
+       Inhalt & Funktion: Ermöglicht Tastatur- und Screenreader-Nutzern, die
+       wiederkehrende Navigation beim Einstieg direkt zu überspringen und zum
+       Hauptinhalt (`#main-content`) zu springen.
+       ======================================================================== -->
+  <a class="skip-link" href="#main-content">Direkt zum Hauptinhalt springen</a>
+
+  <!-- ========================================================================
+       KOPFBEREICH & STICKY-NAVIGATION (<header>)
+       Inhalt: Markenlogo (`FARBWERK`), Burger-Button für Mobilgeräte,
+               Sprunglinks zu den Sektionen und primärer CTA-Button.
+       Besonderheiten: Gesteuert über `aria-expanded` und `aria-controls`; auf
+                       kleinen Viewports öffnet sich ein zugängliches Drawer-Menü,
+                       ab Desktop-Breite wird eine horizontale Leiste angezeigt.
+       ======================================================================== -->
+  <header class="site-header" id="top">
+    <div class="container header__inner">
+      <a class="brand-logo" href="#start" aria-label="FARBWERK – Zur Startseite">
+        FARBWERK
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Menü öffnen"
+      >
+        <span class="nav-toggle__lines" aria-hidden="true"></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-nav" aria-label="Hauptnavigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#leistungen">Leistungen</a></li>
+          <li><a class="nav-link" href="#ablauf">Ablauf</a></li>
+          <li><a class="nav-link" href="#referenzen">Referenzen</a></li>
+          <li><a class="nav-link" href="#kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn--primary nav-cta" href="#kontakt">Angebot anfragen</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HAUPTINHALT (<main>)
+       Inhalt: Bündelt alle zentralen Inhaltssektionen der One-Page-Website
+               (Hero, Leistungen, Detail-Modal, Ablauf, Referenzen, Kontakt).
+       Besonderheiten: `tabindex="-1"` sorgt dafür, dass der Sprung über den
+                       Skip-Link den Fokus zuverlässig in den Hauptbereich setzt.
+       ======================================================================== -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- ======================================================================
+         1. HERO-SEKTION (#start)
+         Inhalt: Markenname, Gewerkebezeichnung, kurzes Leistungsversprechen,
+                 zwei Handlungsaufforderungen (CTAs) und drei Vertrauens-Fakten.
+         Besonderheiten: Dunkles Farbschema (`section--dark`) für starken
+                         Kontrast; weiche Silbentrennung (`&shy;`) verhindert
+                         Überläufe beim langen Wort „Lackierermeisterbetrieb“.
+         ====================================================================== -->
+    <section class="section hero section--dark" id="start" aria-labelledby="hero-heading">
+      <div class="container hero__container">
+        <h1 id="hero-heading">
+          <span class="hero__brand">FARBWERK</span>
+          <span class="hero__divider" aria-hidden="true"></span>
+          <span class="hero__title">Maler- &amp; Lackierer&shy;meister&shy;betrieb</span>
+        </h1>
+
+        <p class="hero__sub">
+          Wir gestalten Wohnräume, Treppenhäuser und Fassaden mit sauberer Untergrundvorbereitung, deckenden Anstrichen und scharfen Kanten. Dabei schützen wir Möbel und Böden zuverlässig und halten vereinbarte Termine verbindlich ein.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#kontakt" class="btn btn--primary">Angebot anfragen</a>
+          <a href="#leistungen" class="btn btn--secondary-outline">Leistungen ansehen</a>
+        </div>
+
+        <ul class="hero__features" aria-label="Wichtige Vorteile">
+          <li>Meisterbetrieb mit festem Ansprechpartner</li>
+          <li>Staubarme &amp; saubere Ausführung</li>
+          <li>Verbindliche Festpreis-Angebote</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2. LEISTUNGEN & FILTER-BEREICH (#leistungen)
+         Inhalt: Filter-Leiste nach Fachbereich (`Alle`, `Innenraum`,
+                 `Lack & Holz`, `Fassade`) sowie vier interaktive Leistungskarten.
+         Besonderheiten & Funktion:
+         - Filter-Buttons nutzen `data-filter` und `aria-pressed` zur dynamischen
+           Ein-/Ausblendung der Karten per JavaScript.
+         - Karten sind semantische `<button>`-Elemente und tragen ihre Detail-
+           infos (`data-image`, `data-highlights`, `data-service-value` etc.)
+           direkt im Markup, um beim Klick das Detail-Modal zu befüllen.
+         ====================================================================== -->
+    <section class="section section--box" id="leistungen" aria-labelledby="leistungen-heading">
+      <div class="container">
+        <span class="section__eyebrow">Handwerk &amp; Präzision</span>
+        <h2 id="leistungen-heading">Unsere Leistungen</h2>
+        <p class="section__intro">
+          Von der klassischen Wandgestaltung bis zur langlebigen Fassadenbeschichtung – sauber, termingerecht und mit hochwertigen Materialien.
+        </p>
+
+        <div class="filter-bar" role="group" aria-label="Leistungen nach Bereich filtern">
+          <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">Alle Leistungen</button>
+          <button type="button" class="filter-btn" data-filter="innen" aria-pressed="false">Innenraum</button>
+          <button type="button" class="filter-btn" data-filter="lack" aria-pressed="false">Lack &amp; Holz</button>
+          <button type="button" class="filter-btn" data-filter="aussen" aria-pressed="false">Fassade</button>
+        </div>
+
+        <div class="grid-cards">
+          <button
+            type="button"
+            class="card card--interactive"
+            data-category="innen"
+            data-service-value="innenraum"
+            data-tag="Innenraum"
+            data-title="Maler- &amp; Streicharbeiten"
+            data-image="assets/images/leistung-maler.jpg"
+            data-image-alt="Frisch gestrichene Wohnzimmerwand mit sauberer Kante und ruhigem Farbton"
+            data-description="Deckende, streifenfreie Anstriche mit emissionsarmen Farben für Wohn- und Geschäftsräume – inklusive sorgfältiger Abklebe- und Abdeckarbeiten."
+            data-highlights="Emissionsarme Innenfarben|Scharfe Kanten &amp; saubere Abdeckarbeiten|Ideal für Wohn-, Arbeits- &amp; Gewerberäume"
+            aria-label="Details und Beispielfoto zu Maler- und Streicharbeiten öffnen"
+          >
+            <span class="card__tag">Innenraum</span>
+            <h3>Maler- &amp; Streicharbeiten</h3>
+            <p>
+              Deckende, streifenfreie Anstriche mit emissionsarmen Farben für Wohn- und Geschäftsräume – inklusive sorgfältiger Abklebe- und Abdeckarbeiten.
+            </p>
+            <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+          </button>
+
+          <button
+            type="button"
+            class="card card--interactive"
+            data-category="innen"
+            data-service-value="tapezieren"
+            data-tag="Oberflächen"
+            data-title="Tapezier- &amp; Spachtelarbeiten"
+            data-image="assets/images/leistung-tapezieren.jpg"
+            data-image-alt="Glatt verspachtelte Wandfläche und sauber verarbeitetes Malervlies vor dem Farbanstrich"
+            data-description="Glatte Q3/Q4-Oberflächen, Malervlies und moderne Designtapeten als perfekte Basis für ein ruhiges und hochwertiges Raumgefühl."
+            data-highlights="Saubere Untergrundvorbereitung &amp; Spachtelung|Malervlies, Raufaser &amp; Designtapeten|Gleichmäßige Lichtreflexion ohne Ansätze"
+            aria-label="Details und Beispielfoto zu Tapezier- und Spachtelarbeiten öffnen"
+          >
+            <span class="card__tag">Oberflächen</span>
+            <h3>Tapezier- &amp; Spachtelarbeiten</h3>
+            <p>
+              Glatte Q3/Q4-Oberflächen, Malervlies und moderne Designtapeten als perfekte Basis für ein ruhiges und hochwertiges Raumgefühl.
+            </p>
+            <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+          </button>
+
+          <button
+            type="button"
+            class="card card--interactive"
+            data-category="lack"
+            data-service-value="lackieren"
+            data-tag="Schutz &amp; Detail"
+            data-title="Lackier- &amp; Holzarbeiten"
+            data-image="assets/images/leistung-lack.jpg"
+            data-image-alt="Neu lackierte Holztür und Zarge mit glatter, seidenmatter Oberfläche"
+            data-description="Fachgerechtes Schleifen, Grundieren und Lackieren von Türen, Zargen, Fenstern, Treppen und Heizkörpern für langlebige Oberflächen."
+            data-highlights="Sorgfältiges Anschleifen &amp; Grundieren|Stoß- und reinigungsbeständige Lacke|Saubere Übergänge an Türen, Zargen &amp; Holz"
+            aria-label="Details und Beispielfoto zu Lackier- und Holzarbeiten öffnen"
+          >
+            <span class="card__tag">Schutz &amp; Detail</span>
+            <h3>Lackier- &amp; Holzarbeiten</h3>
+            <p>
+              Fachgerechtes Schleifen, Grundieren und Lackieren von Türen, Zargen, Fenstern, Treppen und Heizkörpern für langlebige Oberflächen.
+            </p>
+            <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+          </button>
+
+          <button
+            type="button"
+            class="card card--interactive"
+            data-category="aussen"
+            data-service-value="fassade"
+            data-tag="Außenbereich"
+            data-title="Fassadengestaltung"
+            data-image="assets/images/leistung-fassade.jpg"
+            data-image-alt="Gepflegte Hausfassade mit wetterfestem Anstrich im Außenbereich"
+            data-description="Wetterfeste Anstriche, Riss-Sanierung und nachhaltiger Schutz gegen Algen und Witterung – für einen gepflegten ersten Eindruck."
+            data-highlights="Witterungsbeständige Fassadenbeschichtungen|Riss- &amp; Untergrundprüfung vor dem Anstrich|Langfristiger Schutz &amp; gepflegte Optik"
+            aria-label="Details und Beispielfoto zu Fassadengestaltung öffnen"
+          >
+            <span class="card__tag">Außenbereich</span>
+            <h3>Fassadengestaltung</h3>
+            <p>
+              Wetterfeste Anstriche, Riss-Sanierung und nachhaltiger Schutz gegen Algen und Witterung – für einen gepflegten ersten Eindruck.
+            </p>
+            <span class="card__hint" aria-hidden="true">Beispielfoto &amp; Details ansehen →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. LEISTUNGS-DETAIL-MODAL (<dialog id="service-modal">)
+         Inhalt: Dynamisch befülltes Pop-up mit Kategorie-Tag, Titel,
+                 Beispielfoto (inkl. Fallback-Hinweis), Beschreibung,
+                 Stichpunkt-Liste und Aktions-Buttons.
+         Besonderheiten & Funktion: Nutzt das native HTML-`<dialog>`-Element
+         (`showModal()`) für integrierte Fokus-Falle, `Escape`-Unterstützung und
+         Backdrop. Der CTA-Link wählt beim Klick im Kontaktformular automatisch
+         den passenden Leistungsbereich vor.
+         ====================================================================== -->
+    <dialog class="service-modal" id="service-modal" aria-labelledby="service-modal-title">
+      <div class="service-modal__header">
+        <div>
+          <span class="card__tag" id="service-modal-tag"></span>
+          <h3 id="service-modal-title"></h3>
+        </div>
+        <button
+          type="button"
+          class="service-modal__close"
+          id="service-modal-close"
+          aria-label="Fenster schließen"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="service-modal__media">
+        <img id="service-modal-img" src="" alt="" />
+        <p class="service-modal__placeholder" id="service-modal-placeholder" hidden>
+          Beispielfoto folgt – Bildpfad: <code id="service-modal-path"></code>
+        </p>
+      </div>
+
+      <p class="service-modal__desc" id="service-modal-desc"></p>
+
+      <ul class="service-modal__highlights" id="service-modal-highlights"></ul>
+
+      <div class="service-modal__actions">
+        <a href="#kontakt" class="btn btn--primary" id="service-modal-cta">Passendes Angebot anfragen</a>
+        <button type="button" class="btn btn--secondary" id="service-modal-done">Schließen</button>
+      </div>
+    </dialog>
+
+    <!-- ======================================================================
+         4. ARBEITSWEISE / ABLAUF (#ablauf)
+         Inhalt: Vier aufeinanderfolgende Projektschritte von der Beratung vor
+                 Ort bis zur gemeinsamen Abnahme.
+         Besonderheiten: Semantisch als geordnete Liste (`<ol>`) umgesetzt, um
+                         die chronologische Reihenfolge auch für assistive
+                         Technologien abzubilden.
+         ====================================================================== -->
+    <section class="section section--box section--alt" id="ablauf" aria-labelledby="ablauf-heading">
+      <div class="container">
+        <span class="section__eyebrow">Klarer Prozess</span>
+        <h2 id="ablauf-heading">So arbeiten wir</h2>
+        <p class="section__intro">
+          Transparente Absprachen und eine staubarme Baustelle sorgen dafür, dass Ihr Projekt entspannt und planbar abläuft.
+        </p>
+
+        <ol class="steps-grid">
+          <li class="step-card">
+            <span class="step-card__number">01</span>
+            <h3>Beratung vor Ort</h3>
+            <p>Wir prüfen Untergründe, besprechen Ihre Farbwünsche und klären alle technischen Details direkt bei Ihnen.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-card__number">02</span>
+            <h3>Festpreis-Angebot</h3>
+            <p>Sie erhalten ein übersichtliches, verbindliches Angebot mit klarem Zeitplan – ohne versteckte Zusatzkosten.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-card__number">03</span>
+            <h3>Saubere Umsetzung</h3>
+            <p>Wir schützen Möbel und Böden zuverlässig und führen alle Arbeiten präzise und termingerecht aus.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-card__number">04</span>
+            <h3>Gemeinsame Abnahme</h3>
+            <p>Erst wenn jede Kante sitzt und die Räume besenrein übergeben sind, ist unser Auftrag abgeschlossen.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. REFERENZEN / AUSGEWÄHLTE PROJEKTE (#referenzen)
+         Inhalt: Drei beispielhafte Kundenprojekte aus Altbau, Gewerbe und
+                 Außenbereich mit Projektbeschreibung.
+         Besonderheiten: Visuelle Farbpaletten-Vorschau (`project-card__palette`)
+                         zeigt die eingesetzten Farbtöne ohne externe Bilddateien
+                         und ist per `aria-label` für Screenreader beschrieben.
+         ====================================================================== -->
+    <section class="section section--box" id="referenzen" aria-labelledby="referenzen-heading">
+      <div class="container">
+        <span class="section__eyebrow">Einblicke</span>
+        <h2 id="referenzen-heading">Ausgewählte Projekte</h2>
+        <p class="section__intro">
+          Jeder Raum wirkt anders. Hier zeigen wir beispielhaft, wie wir Farbkonzepte und Oberflächen auf Architektur und Nutzung abstimmen.
+        </p>
+
+        <div class="grid-projects">
+          <article class="project-card">
+            <div class="project-card__palette" aria-label="Eingesetzte Farbpalette: Warmes Ocker, Kreideweiß, Anthrazit">
+              <span style="background-color: #e2a123;" title="Warmes Ocker"></span>
+              <span style="background-color: #f4f1ea;" title="Kreideweiß"></span>
+              <span style="background-color: #1e2229;" title="Anthrazit"></span>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__meta">Wohnraum &middot; Altbau</span>
+              <h3>Akzentwand &amp; Stuck-Restaurierung</h3>
+              <p>
+                Kombination aus mattem Kreideweiß und einer warmen Ocker-Akzentwand im Wohnbereich inklusive Aufarbeitung historischer Zierleisten.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__palette" aria-label="Eingesetzte Farbpalette: Tiefgrün, Sandbeige, Schiefer">
+              <span style="background-color: #0f766e;" title="Tiefgrün"></span>
+              <span style="background-color: #e7dfd3;" title="Sandbeige"></span>
+              <span style="background-color: #334155;" title="Schiefergrau"></span>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__meta">Gewerbe &middot; Praxisräume</span>
+              <h3>Ruhiges Farbkonzept für Empfang &amp; Flur</h3>
+              <p>
+                Strapazierfähige, abwaschbare Wandbeschichtung in harmonischen Natur- und Grüntönen für eine einladende Atmosphäre.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__palette" aria-label="Eingesetzte Farbpalette: Steingrau, Reinweiß, Terrakotta">
+              <span style="background-color: #cbd5e1;" title="Steingrau"></span>
+              <span style="background-color: #ffffff;" title="Reinweiß"></span>
+              <span style="background-color: #c2410c;" title="Terrakotta"></span>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__meta">Außenbereich &middot; Einfamilienhaus</span>
+              <h3>Fassadenanstrich &amp; Holzfenster-Lackierung</h3>
+              <p>
+                Vollständige Reinigung, Grundierung und wetterbeständiger Silikonharz-Anstrich samt neu lackierten Holzrahmen.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. KONTAKT & ANFRAGEFORMULAR (#kontakt)
+         Inhalt: Zweispaltiger Bereich mit Betriebsdaten/Erreichbarkeit links
+                 und interaktivem Anfrageformular rechts.
+         Besonderheiten & Funktion: `novalidate` deaktiviert browserabhängige
+         Standard-Popups zugunsten einer eigenen, barrierefreien JavaScript-
+         Validierung (`aria-invalid`, dynamische Fehlermeldungen und Live-
+         Statusregion über `role="status"` / `aria-live="polite"`).
+         ====================================================================== -->
+    <section class="section section--box section--alt" id="kontakt" aria-labelledby="kontakt-heading">
+      <div class="container">
+        <span class="section__eyebrow">Unverbindlich anfragen</span>
+        <h2 id="kontakt-heading">Kontakt &amp; Anfrage</h2>
+        <p class="section__intro">
+          Sie planen einen neuen Anstrich oder eine Renovierung? Schreiben Sie uns kurz Ihr Vorhaben – wir melden uns zeitnah für einen Termin.
+        </p>
+
+        <div class="contact-wrapper">
+          <div class="contact-info">
+            <h3>FARBWERK Meisterbetrieb</h3>
+            <p>Musterstraße 14 &middot; 20095 Hamburg</p>
+            <p><strong>Telefon:</strong> 040 / 123 456 78</p>
+            <p><strong>E-Mail:</strong> info@farbwerk-maler.example</p>
+            <p class="contact-info__hours">Mo – Fr: 07:30 – 17:00 Uhr</p>
+          </div>
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="name">Ihr Name *</label>
+              <input type="text" id="name" name="name" required placeholder="Max Mustermann" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-Mail-Adresse *</label>
+              <input type="email" id="email" name="email" required placeholder="max@beispiel.de" />
+            </div>
+
+            <div class="form-group">
+              <label for="service">Gewünschter Bereich</label>
+              <select id="service" name="service">
+                <option value="innenraum">Innenraum &amp; Wände</option>
+                <option value="tapezieren">Tapezier- &amp; Spachtelarbeiten</option>
+                <option value="lackieren">Lackier- &amp; Holzarbeiten</option>
+                <option value="fassade">Fassadengestaltung</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Kurze Beschreibung Ihres Projekts *</label>
+              <textarea id="message" name="message" rows="4" required placeholder="Worum geht es und wann soll das Projekt starten?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">Anfrage absenden</button>
+            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       FUSSBEREICH (<footer>)
+       Inhalt: Markenabschluss und transparenter Hinweis zum Konzept-/Demo-
+               Charakter des Projekts.
+       ======================================================================== -->
+  <footer class="site-footer" aria-label="Fußbereich mit Kontaktdaten und Projekt-Hinweis">
+    <div class="container">
+      <p>
+        <strong>FARBWERK – Maler- &amp; Lackierermeisterbetrieb</strong> &middot;
+        Hinweis: Fiktives Konzeptprojekt im Rahmen einer Bewerbungsaufgabe.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

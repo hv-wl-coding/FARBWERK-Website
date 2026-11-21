@@ -1,0 +1,1146 @@
+/* ==========================================================================
+   1. DESIGN-SYSTEM & CUSTOM PROPERTIES
+   Inhalt: Zentrale Farb-, Typografie-, Abstands-, Radius-, Schatten- und
+           Übergangsvariablen für die gesamte Anwendung.
+   Besonderheiten & Funktion: Ermöglicht ein konsistentes Design im Stile
+           eines Meisterbetriebs (Anthrazit `#1E2229`, Ocker `#E2A123`,
+           Tiefgrün-Akzent `#0F766E`, helle Oberflächen) und steuert
+           skalierbare Typografie (`clamp`) sowie Layout-Maße an einer Stelle.
+   ========================================================================== */
+:root {
+  /* Farbpalette */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-alt: #eef1f4;
+  --color-dark: #1e2229;
+  --color-dark-soft: #2b313b;
+
+  /* Textfarben */
+  --color-text: #1e2229;
+  --color-text-muted: #4b5563;
+  --color-text-inverse: #f8f9fa;
+
+  /* Marken- & Akzentfarben */
+  --color-accent: #0f766e;
+  --color-accent-hover: #0b5c56;
+  --color-ochre: #e2a123;
+  --color-ochre-hover: #f0b643;
+  --color-ochre-text: #9a6700;
+
+  /* Rahmen & Status */
+  --color-border: #d1d5db;
+  --color-error: #b91c1c;
+  --color-success: #15803d;
+
+  /* Typografie */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+
+  /* Schriftgrößen */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.65rem, 1.4rem + 1.2vw, 2.25rem);
+  --text-3xl: clamp(2.1rem, 1.7rem + 2vw, 3.1rem);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+
+  /* Abstände */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 5.5rem;
+
+  /* Layout, Radien & Schatten */
+  --container-max: 72rem;
+  --header-height: 4.5rem;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(30, 34, 41, 0.08);
+  --shadow-md: 0 8px 24px rgba(30, 34, 41, 0.08);
+
+  /* Übergänge */
+  --transition-fast: 160ms ease;
+  --transition-base: 240ms ease;
+}
+
+/* ==========================================================================
+   2. BASIS-RESET & TYPOGRAFIE
+   Inhalt: Universelles `box-sizing`, Grundlayout des `<body>` als Flex-Spalte,
+           Basis-Typografie für Überschriften und Fließtext sowie Medien-Defaults.
+   Besonderheiten & Funktion: `overflow-x: clip` auf `html` und `body`
+           verhindert horizontales Überlaufen ohne `overflow: hidden`-Fallstricke
+           für `position: sticky`; `scroll-padding-top` berücksichtigt den
+           sticky Header bei Anker-Sprüngen.
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+  color: var(--color-dark);
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+
+h1 {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+p {
+  max-width: 65ch;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* ==========================================================================
+   3. BARRIEREFREIHEIT & FOKUS-ZUSTÄNDE
+   Inhalt: Sichtbare Tastatur-Fokusrahmen (`:focus-visible`), Skip-Link-Styling
+           und `.sr-only` für rein visuell verborgene Screenreader-Texte.
+   Besonderheiten & Funktion: Stellt sicher, dass interaktive Elemente bei
+           Tastaturnavigation mit einem deutlichen ockerfarbenen Umriss
+           hervorgehoben werden und der Skip-Link erst bei Fokus ins Bild fährt.
+   ========================================================================== */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-ochre);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  z-index: 1000;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-dark);
+  color: var(--color-text-inverse);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   4. LAYOUT-CONTAINER & INHALTSBOXEN
+   Inhalt: Zentrierter Basis-Container, vertikale Sektionsabstände, dunkle
+           Sektionsvariante (`.section--dark`) und kartenartige Box-Sektionen
+           (`.section--box` / `.section--alt`) inklusive Eyebrow-Badge.
+   Besonderheiten & Funktion: Verleiht den Inhaltssektionen auf hellem Grund
+           einen klar abgegrenzten Rahmen mit abgerundeten Ecken und zentriert
+           Überschriften sowie Einleitungen. `--color-ochre-text` sorgt für
+           ausreichenden Kontrast auf hellen Flächen.
+   ========================================================================== */
+.container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    padding-block: var(--space-3xl);
+  }
+}
+
+.section--dark {
+  background-color: var(--color-dark);
+  color: var(--color-text-inverse);
+}
+
+.section--dark h2,
+.section--dark h3 {
+  color: var(--color-text-inverse);
+}
+
+.section--box {
+  width: min(100% - 2rem, 90rem);
+  margin-inline: auto;
+  margin-block: var(--space-lg);
+  padding-inline: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.section--box.section--alt {
+  background-color: var(--color-surface-alt);
+}
+
+@media (min-width: 48rem) {
+  .section--box {
+    width: min(100% - 3rem, 90rem);
+    padding-inline: var(--space-xl);
+    margin-block: var(--space-xl);
+  }
+}
+
+.section--box > .container {
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section--box p {
+  margin-inline: auto;
+}
+
+.section__eyebrow {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ochre-text);
+  background-color: rgba(226, 161, 35, 0.16);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-sm);
+}
+
+.section__intro {
+  color: var(--color-text-muted);
+  max-width: 58ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-xl);
+}
+
+/* ==========================================================================
+   5. BUTTON-VARIANTEN
+   Inhalt: Gemeinsame Button-Basis (`.btn`) sowie Varianten für Primäraktion
+           (`.btn--primary`), Sekundäraktion (`.btn--secondary`), dunklen
+           Hintergrund (`.btn--secondary-outline`) und volle Breite (`.btn--full`).
+   Besonderheiten & Funktion: Vereinheitlicht Klickflächen, Hover-Zustände
+           und Farbkontraste in Header, Hero, Modal und Kontaktformular.
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.75rem 1.35rem;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  transition: background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.btn--primary {
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-dark);
+  border-color: var(--color-dark);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-dark);
+  color: var(--color-text-inverse);
+}
+
+.btn--secondary-outline {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn--secondary-outline:hover {
+  background-color: #ffffff;
+  color: var(--color-dark);
+  border-color: #ffffff;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   6. STICKY-HEADER & RESPONSIVE NAVIGATION
+   Inhalt: Fixierte Kopfzeile (`.site-header`), Logo (`FARBWERK`), Burger-
+           Button (`.nav-toggle`) mit animierten Linien und Navigation (`.primary-nav`).
+   Besonderheiten & Funktion: Bleibt beim Scrollen oben sichtbar (`position: sticky`),
+           blendet unter `56rem` ein aufklappbares Menü (`aria-expanded` /
+           `.is-open`) ein und wechselt ab `56rem` in eine horizontale Leiste.
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  background-color: rgba(30, 34, 41, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-inverse);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  position: relative;
+}
+
+.brand-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ochre);
+  white-space: nowrap;
+}
+
+.brand-logo:hover {
+  color: var(--color-ochre-hover);
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-text-inverse);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.nav-toggle:hover {
+  border-color: var(--color-ochre);
+  color: var(--color-ochre);
+}
+
+.nav-toggle__lines,
+.nav-toggle__lines::before,
+.nav-toggle__lines::after {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.nav-toggle__lines {
+  position: relative;
+}
+
+.nav-toggle__lines::before,
+.nav-toggle__lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle__lines::before {
+  top: -6px;
+}
+
+.nav-toggle__lines::after {
+  top: 6px;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__lines {
+  background-color: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__lines::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__lines::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.primary-nav {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background-color: var(--color-dark);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.primary-nav.is-open {
+  display: flex;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.nav-link {
+  display: inline-block;
+  padding-block: 0.35rem;
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--color-ochre);
+}
+
+.nav-cta {
+  width: 100%;
+}
+
+@media (min-width: 56rem) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .primary-nav {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-xl);
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    width: auto;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .nav-cta {
+    width: auto;
+    padding: 0.6rem 1.1rem;
+  }
+}
+
+/* ==========================================================================
+   7. HERO-BEREICH (DARK MODE & DISPLAY-TYPOGRAFIE)
+   Inhalt: Zentrierter Einstiegsbereich mit großem Markenauftritt (`.hero__brand`),
+           Trennlinie (`.hero__divider`), Untertitel (`.hero__title`),
+           Einleitungstext, CTA-Buttons und Vertrauenspunkten (`.hero__features`).
+   Besonderheiten & Funktion: Setzt mit `Playfair Display` und dem Kontrast
+           zwischen Ocker, Weiß und Anthrazit den markanten Einstieg; die
+           Vorteilsliste ergänzt automatisch ockerfarbene Haken per `::before`.
+   ========================================================================== */
+.hero {
+  text-align: center;
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+#hero-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+  max-width: 48rem;
+}
+
+.hero__brand {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-weight: 900;
+  color: var(--color-ochre);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.hero__divider {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background-color: #ffffff;
+  margin-block: var(--space-md);
+  opacity: 0.4;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.hero__sub {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--color-surface-alt);
+  max-width: 50ch;
+  margin-inline: auto;
+  opacity: 0.9;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.hero__features {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md) var(--space-xl);
+  margin-top: var(--space-xl);
+  margin-bottom: 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-surface-alt);
+}
+
+.hero__features li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.hero__features li::before {
+  content: "✓";
+  color: var(--color-ochre);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   8. FILTER-LEISTE & INTERAKTIVE LEISTUNGSKARTEN
+   Inhalt: Pill-Filterbuttons (`.filter-bar` / `.filter-btn`), responsives
+           Kartenraster (`.grid-cards`) und interaktive Leistungskarten
+           (`.card` / `.card--interactive`) mit Tag, Titel, Text und Hinweis.
+   Besonderheiten & Funktion: `.card.is-hidden` blendet ungefilterte Karten
+           aus; Hover und Tastaturfokus heben `.card--interactive` leicht an,
+           färben den oberen Rahmen und den `.card__hint`-Pfeil ein und
+           signalisieren, dass sich per Klick ein Detail-Modal öffnet.
+   ========================================================================== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.filter-btn {
+  padding: 0.45rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-dark);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--color-dark);
+}
+
+.filter-btn.is-active {
+  background-color: var(--color-dark);
+  color: var(--color-ochre);
+  border-color: var(--color-dark);
+}
+
+.grid-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  gap: var(--space-lg);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.card.is-hidden {
+  display: none;
+}
+
+.card__tag {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.card h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 38ch;
+  margin-inline: auto;
+  margin-bottom: 0;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+.card--interactive {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.card--interactive:hover,
+.card--interactive:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-top-color: var(--color-ochre);
+  border-color: rgba(226, 161, 35, 0.55);
+  background-color: var(--color-surface);
+}
+
+.card__hint {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-dark);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.card--interactive:hover .card__hint,
+.card--interactive:focus-visible .card__hint {
+  color: var(--color-ochre-text);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   9. BEISPIELFOTO-DIALOG (<dialog class="service-modal">)
+   Inhalt: Gestaltung des nativen `<dialog>`-Fensters samt Backdrop, Kopfzeile
+           mit Schließen-Button, Bildbereich (`16 / 10`), Platzhalter-Fallback,
+           Beschreibung, Highlight-Liste und mittig ausgerichteten Buttons.
+   Besonderheiten & Funktion: `.service-modal::backdrop` dunkelt den
+           Hintergrund ab und weicht ihn leicht auf; `.is-missing` blendet
+           das `<img>` sauber aus, falls ein Beispielfoto noch nicht vorliegt.
+   ========================================================================== */
+.service-modal {
+  width: min(100% - 2rem, 42rem);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  margin: auto;
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-top: 5px solid var(--color-ochre);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+}
+
+.service-modal::backdrop {
+  background-color: rgba(30, 34, 41, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.service-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.service-modal__header h3 {
+  margin-bottom: 0;
+  font-size: var(--text-xl);
+}
+
+.service-modal__close {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+  font-weight: 700;
+}
+
+.service-modal__close:hover {
+  background-color: var(--color-dark);
+  color: var(--color-ochre);
+  border-color: var(--color-dark);
+}
+
+.service-modal__media {
+  margin-bottom: var(--space-md);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.service-modal__media img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.service-modal__media img.is-missing {
+  display: none;
+}
+
+.service-modal__placeholder {
+  padding: var(--space-lg);
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.service-modal__desc {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.service-modal__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg);
+  display: grid;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+}
+
+.service-modal__highlights li::before {
+  content: "• ";
+  color: var(--color-ochre-text);
+  font-weight: 700;
+}
+
+.service-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========================================================================
+   10. ARBEITSWEISE (.steps-grid) & REFERENZEN (.grid-projects)
+   Inhalt: Vierstufiges Prozess-Raster mit nummerierten Badges sowie das
+           Projekt-Raster mit Farbpaletten-Streifen (`.project-card__palette`).
+   Besonderheiten & Funktion: `.step-card__number` nutzt `Playfair Display`
+           auf dunklem Grund in Ocker für klare Schrittführung;
+           `.project-card__palette` teilt die Farbvorschau in `2fr 1fr 1fr` auf.
+   ========================================================================== */
+.steps-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+  gap: var(--space-lg);
+  text-align: left;
+}
+
+.step-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.step-card__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-dark);
+  color: var(--color-ochre);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-md);
+}
+
+.step-card h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.step-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+.grid-projects {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-lg);
+  text-align: left;
+}
+
+.project-card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card__palette {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  height: 4.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-card__body {
+  padding: var(--space-lg);
+}
+
+.project-card__meta {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2xs);
+}
+
+.project-card h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.project-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   11. KONTAKTBEREICH, FORMULAR & VALIDIERUNGSZUSTÄNDE
+   Inhalt: Zweispaltiges Layout (`.contact-wrapper`) aus dunkler Info-Box
+           (`.contact-info`) und Formular (`.contact-form`) sowie Styles für
+           Fehlerfelder (`.field-error`, `[aria-invalid="true"]`) und
+           Statusmeldungen (`.form-feedback.is-success` / `.is-error`).
+   Besonderheiten & Funktion: Ab `48rem` wechselt das Layout in ein
+           `1fr : 1.4fr`-Raster und macht Fehlerzustände visuell eindeutig.
+   ========================================================================== */
+.contact-wrapper {
+  width: 100%;
+  max-width: 56rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  text-align: left;
+}
+
+@media (min-width: 48rem) {
+  .contact-wrapper {
+    grid-template-columns: 1fr 1.4fr;
+    align-items: start;
+  }
+}
+
+.contact-info {
+  background-color: var(--color-dark);
+  color: var(--color-text-inverse);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+}
+
+.contact-info h3 {
+  color: var(--color-ochre);
+  font-family: var(--font-display);
+  margin-bottom: var(--space-md);
+}
+
+.contact-info p {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-info__hours {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-surface-alt);
+}
+
+.contact-form {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-group label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg);
+  transition: border-color var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.form-group input[aria-invalid="true"],
+.form-group select[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+  background-color: #fef2f2;
+}
+
+.field-error {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  font-weight: 600;
+  min-height: 1.1em;
+}
+
+.form-feedback {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: 0;
+  min-height: 1.4em;
+}
+
+.form-feedback.is-success {
+  color: var(--color-success);
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.form-feedback.is-error {
+  color: var(--color-error);
+}
+
+/* ==========================================================================
+   12. FOOTER & REDUZIERTE BEWEGUNG (`prefers-reduced-motion`)
+   Inhalt: Dunkler Abschlussbereich (`.site-footer`) und Media-Query für
+           Nutzer mit aktivierter Bewegungsreduktion.
+   Besonderheiten & Funktion: Verkürzt Animationen, Übergänge und Smooth-
+           Scrolling auf ein Minimum, wenn das System `prefers-reduced-motion:
+           reduce` signalisiert.
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-dark);
+  color: var(--color-text-inverse);
+  padding-block: var(--space-xl);
+  margin-top: var(--space-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.site-footer p {
+  margin-inline: auto;
+  margin-bottom: 0;
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
